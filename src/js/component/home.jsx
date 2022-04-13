@@ -7,9 +7,31 @@ import rigoImage from "../../img/rigo-baby.jpg";
 //create your first component
 const Home = () => {
 	const [color, setColor] = useState("red");
-	const [randonLight, setRandonLight] = useState("light red glow");
-	let listOfLights = ["light red", "light yellow", "light green"];
+	const [isPurpleOn, setIsPurpleOn] = useState(false);
+	const [listOfLights, setLisOfLights] = useState(["red", "yellow", "green"]);
+	const [cycleRunning, setCycleRunning] = useState();
+	//let listOfLights = ["red", "yellow", "green"];
 	let i = 0;
+
+	const onTogglePurple = () => {
+		setIsPurpleOn(!isPurpleOn);
+		if (isPurpleOn) {
+			setLisOfLights(["red", "yellow", "green", "purple"]);
+		} else {
+			setLisOfLights(["red", "yellow", "green"]);
+		}
+	};
+
+	const onCycle = () => {
+		clearInterval(cycleRunning);
+		const interval = setInterval(function () {
+			i++;
+			let result = i % listOfLights.length;
+			setColor(listOfLights[result]);
+			console.log(listOfLights);
+		}, 1000);
+		setCycleRunning(interval);
+	};
 
 	return (
 		<div>
@@ -32,20 +54,23 @@ const Home = () => {
 						"light green" +
 						(color === "green" ? "light green glow" : "")
 					}></div>
+
+				{isPurpleOn === true ? (
+					<div
+						onClick={() => setColor("purple")}
+						className={
+							"light purple" +
+							(color === "purple" ? "light purple glow" : "")
+						}></div>
+				) : null}
 			</div>
 			<p></p>
 			<p></p>
-			<button
-				onClick={() =>
-					setInterval(function () {
-						i++;
-						let result = i % listOfLights.length;
-						let traficLight = listOfLights[result] + " glow";
-						console.log(traficLight);
-					}, 1000)
-				}
-				className="changeColor">
+			<button onClick={onCycle} className="changeColor">
 				Cycle Traffic Light Color
+			</button>
+			<button onClick={onTogglePurple} className="changeColor">
+				{isPurpleOn ? "Remove Purple" : "Add Purple"}
 			</button>
 		</div>
 	);
