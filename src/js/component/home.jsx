@@ -8,29 +8,40 @@ import rigoImage from "../../img/rigo-baby.jpg";
 const Home = () => {
 	const [color, setColor] = useState("red");
 	const [isPurpleOn, setIsPurpleOn] = useState(false);
-	const [listOfLights, setLisOfLights] = useState(["red", "yellow", "green"]);
+	const [listOfLights, setListOfLights] = useState([
+		"red",
+		"yellow",
+		"green",
+	]);
 	const [cycleRunning, setCycleRunning] = useState();
 	//let listOfLights = ["red", "yellow", "green"];
 	let i = 0;
 
 	const onTogglePurple = () => {
 		setIsPurpleOn(!isPurpleOn);
+
 		if (isPurpleOn) {
-			setLisOfLights(["red", "yellow", "green", "purple"]);
+			setListOfLights(["red", "yellow", "green", "purple"]);
 		} else {
-			setLisOfLights(["red", "yellow", "green"]);
+			setListOfLights(["red", "yellow", "green"]);
 		}
+		console.log("onToggle " + listOfLights);
 	};
 
 	const onCycle = () => {
 		clearInterval(cycleRunning);
 		const interval = setInterval(function () {
-			i++;
 			let result = i % listOfLights.length;
 			setColor(listOfLights[result]);
-			console.log(listOfLights);
+			console.log("onCycle " + listOfLights);
+			i++;
 		}, 1000);
 		setCycleRunning(interval);
+	};
+
+	const doubleFunction = () => {
+		onTogglePurple();
+		onCycle();
 	};
 
 	return (
@@ -69,7 +80,7 @@ const Home = () => {
 			<button onClick={onCycle} className="changeColor">
 				Cycle Traffic Light Color
 			</button>
-			<button onClick={onTogglePurple} className="changeColor">
+			<button onClick={doubleFunction} className="changeColor">
 				{isPurpleOn ? "Remove Purple" : "Add Purple"}
 			</button>
 		</div>
