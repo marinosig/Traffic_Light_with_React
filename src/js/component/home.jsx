@@ -1,25 +1,17 @@
+import { useState, useEffect } from "react";
 import React from "react";
-import { useState } from "react";
-
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
 	const [color, setColor] = useState("red");
 	const [isPurpleOn, setIsPurpleOn] = useState(false);
-	const [listOfLights, setListOfLights] = useState([
-		"red",
-		"yellow",
-		"green",
-	]);
+	const [listOfLights, setListOfLights] = useState([]);
 	const [cycleRunning, setCycleRunning] = useState();
 	//let listOfLights = ["red", "yellow", "green"];
 	let i = 0;
-
 	const onTogglePurple = () => {
+		console.log("onToggle " + listOfLights);
 		setIsPurpleOn(!isPurpleOn);
-
 		if (isPurpleOn) {
 			setListOfLights(["red", "yellow", "green", "purple"]);
 		} else {
@@ -27,7 +19,6 @@ const Home = () => {
 		}
 		console.log("onToggle " + listOfLights);
 	};
-
 	const onCycle = () => {
 		clearInterval(cycleRunning);
 		const interval = setInterval(function () {
@@ -38,14 +29,15 @@ const Home = () => {
 		}, 1000);
 		setCycleRunning(interval);
 	};
-
-	const doubleFunction = () => {
+	useEffect(() => {
+		setListOfLights(["red", "yellow", "green", "purple"]);
+	}, []);
+	const onClick = () => {
 		onTogglePurple();
 		onCycle();
 	};
-
 	return (
-		<div>
+		<div className="container">
 			<div className="stick"></div>
 			<div className="traffic">
 				<div
@@ -65,26 +57,27 @@ const Home = () => {
 						"light green" +
 						(color === "green" ? "light green glow" : "")
 					}></div>
-
 				{isPurpleOn === true ? (
-					<div
-						onClick={() => setColor("purple")}
-						className={
-							"light purple" +
-							(color === "purple" ? "light purple glow" : "")
-						}></div>
+					<div className="trafficPurple">
+						<div
+							onClick={() => setColor("purple")}
+							className={
+								"light purple" +
+								(color === "purple" ? "light purple glow" : "")
+							}></div>
+					</div>
 				) : null}
 			</div>
 			<p></p>
-			<p></p>
-			<button onClick={onCycle} className="changeColor">
-				Cycle Traffic Light Color
+
+			<button onClick={onCycle} className="Cycle">
+				Cycle
 			</button>
-			<button onClick={doubleFunction} className="changeColor">
+			<p></p>
+			<button onClick={onClick} className="changeColor">
 				{isPurpleOn ? "Remove Purple" : "Add Purple"}
 			</button>
 		</div>
 	);
 };
-
 export default Home;

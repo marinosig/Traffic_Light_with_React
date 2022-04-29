@@ -1,6 +1,16 @@
+#app {
+    width: 200px;
+    position: absolute;
+    display: flex;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+}
+
+
 .stick {
     width: 10px;
-    height: 50px;
+    height: 160px;
     background-color: black;
     margin-left: 45px;
 }
@@ -8,7 +18,15 @@
     width: 105px;
     height: 305px;
     background-color: black;
+ }
+
+.trafficPurple {
+    width: 105px;
+    height: 105px;
+    background-color: black;
+
 }
+
 .light {
     border-radius: 50%;
     width: 100px;
@@ -36,5 +54,19 @@
 }
 .glow {
         box-shadow: 0px 0px 20px 20px #fff38a;
+
+}
+
+.changeColor, .Cycle {
+    position: relative;
+    top: 100px;
+    align-items: center;
+    border:none;
+
+}
+
+.changeColor {
+background-color: purple;
+color:white
 
 }
